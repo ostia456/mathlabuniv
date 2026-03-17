@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  # Frontend (React + Vite)
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:5000/api
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+    depends_on:
+      - backend
+    networks:
+      - mathlab-network
+
+  # Backend (Flask)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+      - DATABASE_URL=postgresql://mathlab:mathlab@db:5432/mathlab_db
+      - SECRET_KEY=dev-secret-key-change-in-production
+      - JWT_SECRET_KEY=dev-jwt-secret-key-change-in-production
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - db
+    networks:
+      - mathlab-network
+
+  # Database (PostgreSQL)
+  db:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=mathlab
+      - POSTGRES_PASSWORD=mathlab
+      - POSTGRES_DB=mathlab_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - mathlab-network
+
+  # pgAdmin (optional, for database management)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    ports:
+      - "5050:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@mathlab.edu
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    depends_on:
+      - db
+    networks:
+      - mathlab-network
+
+volumes:
+  postgres_data:
+
+networks:
+  mathlab-network:
+    driver: bridge

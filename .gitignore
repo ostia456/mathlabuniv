@@ -1,0 +1,24 @@
+# Python
+venv/
+backend/venv/
+__pycache__/
+*.pyc
+
+# Environnement
+.env
+backend/.env
+
+# Flask instance
+backend/instance/
+
+# Node / Frontend
+node_modules/
+dist/
+
+# Archives
+*.tar.gz
+*.zip
+
+# OS
+.DS_Store
+Thumbs.db
