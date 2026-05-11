@@ -18,7 +18,7 @@ const modules = [
   {
     id: 'dynamical-systems',
     name: 'Systèmes Dynamiques',
-    description: 'Simulation d\'équations différentielles, portraits de phase, analyse de stabilité',
+    description: "Simulation d'équations différentielles, portraits de phase, analyse de stabilité",
     icon: LineChart,
     color: 'bg-blue-500',
     path: '/modules/dynamical-systems',
@@ -26,7 +26,7 @@ const modules = [
   {
     id: 'numerical-methods',
     name: 'Méthodes Numériques',
-    description: 'Comparaison des méthodes d\'intégration, analyse d\'erreur, convergence',
+    description: "Comparaison des méthodes d'intégration, analyse d'erreur, convergence",
     icon: Calculator,
     color: 'bg-green-500',
     path: '/modules/numerical-methods',
@@ -49,26 +49,39 @@ const modules = [
   },
 ];
 
+// ── Fonctionnalités clés — maintenant cliquables avec liens vers les vraies pages ──
 const features = [
   {
     icon: Sparkles,
     title: 'Simulations Interactives',
     description: 'Manipulez les paramètres en temps réel et visualisez les résultats instantanément.',
+    path: '/modules/dynamical-systems',
+    cta: 'Lancer une simulation',
+    color: 'bg-blue-500/10 text-blue-600',
   },
   {
     icon: BookOpen,
     title: 'Exercices Générés',
     description: 'Des exercices uniques générés procéduralement avec correction automatique.',
+    path: '/exercises',
+    cta: 'Voir les exercices',
+    color: 'bg-green-500/10 text-green-600',
   },
   {
     icon: Target,
     title: 'Progression Adaptative',
-    description: 'La difficulté s\'adapte automatiquement à votre niveau de maîtrise.',
+    description: "La difficulté s'adapte automatiquement à votre niveau de maîtrise.",
+    path: '/progress',
+    cta: 'Voir ma progression',
+    color: 'bg-orange-500/10 text-orange-600',
   },
   {
     icon: Users,
     title: 'Scénarios Pédagogiques',
     description: 'Les enseignants peuvent créer et partager des scénarios personnalisés.',
+    path: '/scenarios',
+    cta: 'Explorer les scénarios',
+    color: 'bg-purple-500/10 text-purple-600',
   },
 ];
 
@@ -77,7 +90,8 @@ export function HomePage() {
 
   return (
     <div className="space-y-12">
-      {/* Hero Section */}
+
+      {/* ── Hero Section ── */}
       <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary to-primary/80 px-6 py-16 text-primary-foreground">
         <div className="relative z-10 mx-auto max-w-3xl text-center">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
@@ -94,11 +108,7 @@ export function HomePage() {
                 Commencer les exercices
               </Link>
             </Button>
-            <Button
-              asChild
-              size="lg"
-              className="bg-black text-white hover:bg-black/90"
-            >
+            <Button asChild size="lg" className="bg-black text-white hover:bg-black/90">
               <Link to="/modules/dynamical-systems">
                 Explorer les modules
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -106,21 +116,17 @@ export function HomePage() {
             </Button>
           </div>
         </div>
-        
-        {/* Decorative elements */}
         <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
         <div className="absolute -bottom-20 -right-20 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
       </section>
 
-      {/* Modules Section */}
+      {/* ── Modules Section ── */}
       <section>
-        <div className="mb-6 flex items-center justify-between">
-          <div>
-            <h2 className="text-3xl font-bold">Modules de Simulation</h2>
-            <p className="text-muted-foreground">
-              Explorez les quatre domaines des mathématiques appliquées
-            </p>
-          </div>
+        <div className="mb-6">
+          <h2 className="text-3xl font-bold">Modules de Simulation</h2>
+          <p className="text-muted-foreground">
+            Explorez les quatre domaines des mathématiques appliquées
+          </p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
@@ -146,7 +152,7 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* ── Fonctionnalités Clés — maintenant cliquables ── */}
       <section className="rounded-2xl bg-muted/50 px-6 py-12">
         <div className="mb-8 text-center">
           <h2 className="text-3xl font-bold">Fonctionnalités Clés</h2>
@@ -157,24 +163,32 @@ export function HomePage() {
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {features.map((feature, index) => (
-            <Card key={index} className="bg-background">
-              <CardContent className="pt-6">
-                <div className="mb-4 inline-flex rounded-lg bg-primary/10 p-3">
-                  <feature.icon className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="font-semibold">{feature.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  {feature.description}
-                </p>
-              </CardContent>
-            </Card>
+            // FIX : chaque carte est maintenant un lien cliquable
+            <Link key={index} to={feature.path} className="group block">
+              <Card className="h-full bg-background transition-all duration-200 hover:shadow-md hover:-translate-y-1">
+                <CardContent className="pt-6">
+                  <div className={`mb-4 inline-flex rounded-lg p-3 ${feature.color}`}>
+                    <feature.icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="font-semibold">{feature.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    {feature.description}
+                  </p>
+                  {/* CTA visible au hover */}
+                  <p className="mt-3 flex items-center gap-1 text-sm font-medium text-primary opacity-0 transition-opacity group-hover:opacity-100">
+                    {feature.cta}
+                    <ArrowRight className="h-3 w-3" />
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
           ))}
         </div>
       </section>
 
-      {/* Quick Start Section */}
+      {/* ── Quick Start ── */}
       <section className="text-center">
-        <h2 className="text-2xl font-bold">Prêt à commencer?</h2>
+        <h2 className="text-2xl font-bold">Prêt à commencer ?</h2>
         <p className="mt-2 text-muted-foreground">
           Choisissez un module et commencez à explorer les mathématiques de manière interactive.
         </p>
@@ -194,11 +208,13 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Info Section */}
+      {/* ── Info Section ── */}
       <section className="rounded-xl border bg-card p-6">
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <div>
-            <h3 className="text-lg font-semibold">UNSTIM - Département de Mathématiques-Informatique</h3>
+            <h3 className="text-lg font-semibold">
+              UNSTIM - Département de Mathématiques-Informatique
+            </h3>
             <p className="text-sm text-muted-foreground">
               Projet de Licence 3 - Responsable: DEDO E. Ostia
             </p>
@@ -209,6 +225,7 @@ export function HomePage() {
           </div>
         </div>
       </section>
+
     </div>
   );
 }

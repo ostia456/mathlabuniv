@@ -34,15 +34,34 @@ apiClient.interceptors.response.use(
   }
 );
 
+// ─────────────────────────────────────────────────────────────────────────────
 // Auth API
+// ─────────────────────────────────────────────────────────────────────────────
 export const authApi = {
   login: async (email: string, password: string) => {
     const response = await apiClient.post('/auth/login', { email, password });
     return response.data;
   },
 
-  register: async (data: { email: string; password: string; first_name: string; last_name: string }) => {
+  register: async (data: {
+    email: string;
+    password: string;
+    first_name: string;
+    last_name: string;
+  }) => {
     const response = await apiClient.post('/auth/register', data);
+    return response.data;
+  },
+
+  // ✅ Vérification email — étape 2 après inscription
+  verifyEmail: async (payload: { email: string; code: string }) => {
+    const response = await apiClient.post('/auth/verify-email', payload);
+    return response.data;
+  },
+
+  // ✅ Renvoyer le code de vérification
+  resendVerification: async (payload: { email: string }) => {
+    const response = await apiClient.post('/auth/resend-verification', payload);
     return response.data;
   },
 
@@ -56,13 +75,19 @@ export const authApi = {
     return response.data.user;
   },
 
-  updateProfile: async (data: { first_name?: string; last_name?: string; password?: string }) => {
+  updateProfile: async (data: {
+    first_name?: string;
+    last_name?: string;
+    password?: string;
+  }) => {
     const response = await apiClient.put('/auth/profile', data);
     return response.data;
   },
 };
 
+// ─────────────────────────────────────────────────────────────────────────────
 // Dynamical Systems API
+// ─────────────────────────────────────────────────────────────────────────────
 export const dsApi = {
   getSystems: async () => {
     const response = await apiClient.get('/dynamical-systems/systems');
@@ -101,7 +126,9 @@ export const dsApi = {
   },
 };
 
+// ─────────────────────────────────────────────────────────────────────────────
 // Numerical Methods API
+// ─────────────────────────────────────────────────────────────────────────────
 export const nmApi = {
   getMethods: async () => {
     const response = await apiClient.get('/numerical-methods/methods');
@@ -146,7 +173,9 @@ export const nmApi = {
   },
 };
 
+// ─────────────────────────────────────────────────────────────────────────────
 // Linear Algebra API
+// ─────────────────────────────────────────────────────────────────────────────
 export const laApi = {
   transform: async (data: { matrix: number[][]; points?: number[][] }) => {
     const response = await apiClient.post('/linear-algebra/transform', data);
@@ -186,7 +215,9 @@ export const laApi = {
   },
 };
 
+// ─────────────────────────────────────────────────────────────────────────────
 // Graph Theory API
+// ─────────────────────────────────────────────────────────────────────────────
 export const gtApi = {
   getAlgorithms: async () => {
     const response = await apiClient.get('/graph-theory/algorithms');
@@ -239,7 +270,9 @@ export const gtApi = {
   },
 };
 
+// ─────────────────────────────────────────────────────────────────────────────
 // Exercises API
+// ─────────────────────────────────────────────────────────────────────────────
 export const exerciseApi = {
   generate: async (data: { module: string; type: string; difficulty?: number }) => {
     const response = await apiClient.post('/exercises/generate', data);
@@ -262,7 +295,9 @@ export const exerciseApi = {
   },
 };
 
+// ─────────────────────────────────────────────────────────────────────────────
 // Scenarios API
+// ─────────────────────────────────────────────────────────────────────────────
 export const scenarioApi = {
   list: async () => {
     const response = await apiClient.get('/scenarios/');
@@ -315,7 +350,9 @@ export const scenarioApi = {
   },
 };
 
+// ─────────────────────────────────────────────────────────────────────────────
 // Dashboard API
+// ─────────────────────────────────────────────────────────────────────────────
 export const dashboardApi = {
   getStats: async () => {
     const response = await apiClient.get('/dashboard/stats');

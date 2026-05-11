@@ -33,15 +33,15 @@ import {
 
 const modules = [
   { name: 'Systèmes Dynamiques', path: '/modules/dynamical-systems', icon: LineChart },
-  { name: 'Méthodes Numériques', path: '/modules/numerical-methods', icon: Calculator },
-  { name: 'Algèbre Linéaire', path: '/modules/linear-algebra', icon: Grid3X3 },
-  { name: 'Théorie des Graphes', path: '/modules/graph-theory', icon: Share2 },
+  { name: 'Méthodes Numériques',  path: '/modules/numerical-methods',  icon: Calculator },
+  { name: 'Algèbre Linéaire',     path: '/modules/linear-algebra',      icon: Grid3X3 },
+  { name: 'Théorie des Graphes',  path: '/modules/graph-theory',        icon: Share2 },
 ];
 
 export function MainLayout() {
   const { user, logout } = useAuth();
-  const location = useLocation();
-  const navigate = useNavigate();
+  const location  = useLocation();
+  const navigate  = useNavigate();
 
   const isTeacher = user?.role === 'teacher' || user?.role === 'admin';
 
@@ -52,9 +52,12 @@ export function MainLayout() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
+
+      {/* ── Header ── */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between">
+        {/* FIX : mx-auto + max-w-7xl pour centrer comme le main */}
+        <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-6">
+
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
             <GraduationCap className="h-8 w-8 text-primary" />
@@ -162,9 +165,7 @@ export function MainLayout() {
                 </div>
                 <div className="flex flex-col">
                   <span className="font-medium">{user?.full_name}</span>
-                  <span className="text-xs text-muted-foreground capitalize">
-                    {user?.role}
-                  </span>
+                  <span className="text-xs text-muted-foreground capitalize">{user?.role}</span>
                 </div>
               </div>
               <DropdownMenuSeparator />
@@ -198,14 +199,16 @@ export function MainLayout() {
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="container py-6">
+      {/* ── Main Content ── */}
+      {/* FIX : mx-auto + max-w-7xl + px-6 pour centrer le contenu sur toute la largeur */}
+      <main className="mx-auto w-full max-w-7xl px-6 py-8">
         <Outlet />
       </main>
 
-      {/* Footer */}
+      {/* ── Footer ── */}
       <footer className="border-t bg-muted/50">
-        <div className="container py-6">
+        {/* FIX : même contrainte de largeur que le header et le main */}
+        <div className="mx-auto w-full max-w-7xl px-6 py-6">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <div className="flex items-center gap-2">
               <GraduationCap className="h-6 w-6 text-primary" />
@@ -220,6 +223,7 @@ export function MainLayout() {
           </div>
         </div>
       </footer>
+
     </div>
   );
 }

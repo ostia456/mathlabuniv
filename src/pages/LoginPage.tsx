@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -15,6 +15,10 @@ export function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
+
+  // ✅ useLocation est bien DANS le composant
+  const location = useLocation();
+  const successMessage = location.state?.message;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,6 +54,14 @@ export function LoginPage() {
 
           <form onSubmit={handleSubmit}>
             <CardContent className="space-y-4">
+
+              {/* ✅ Message de succès après inscription */}
+              {successMessage && (
+                <Alert className="border-green-200 bg-green-50 text-green-800">
+                  <AlertDescription>{successMessage}</AlertDescription>
+                </Alert>
+              )}
+
               {error && (
                 <Alert variant="destructive">
                   <AlertDescription>{error}</AlertDescription>
@@ -94,7 +106,7 @@ export function LoginPage() {
               </Button>
 
               <p className="text-sm text-muted-foreground">
-                Pas encore de compte?{' '}
+                Pas encore de compte ?{' '}
                 <Link to="/register" className="text-primary hover:underline">
                   S'inscrire
                 </Link>
