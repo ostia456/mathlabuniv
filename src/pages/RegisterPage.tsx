@@ -1,4 +1,4 @@
-import type { useState, useRef, KeyboardEvent, ClipboardEvent } from 'react';
+import React, { useState, useRef, type KeyboardEvent, type ClipboardEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { authApi } from '@/services/api'; // adapte si ton API s'appelle autrement
