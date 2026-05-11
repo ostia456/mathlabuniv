@@ -4,7 +4,7 @@ Plateforme web interactive de simulation mathématique pour les étudiants en Li
 
 ## 🚨 IMPORTANT - Pour faire fonctionner l'authentification
 
-Le site déployé (https://urk4l2fofuir6.ok.kimi.link) est **le frontend uniquement**. 
+Le site déployé est **le frontend uniquement**. 
 Pour que l'authentification fonctionne, vous devez **démarrer le backend localement**.
 
 ## 🚀 Démarrage Rapide
@@ -47,7 +47,7 @@ Le backend sera accessible sur **http://localhost:5000**
 
 ### 3. Accéder au site
 
-Ouvrez le site déployé : **https://urk4l2fofuir6.ok.kimi.link**
+Ouvrez le site déployé : ** **
 
 Connectez-vous avec l'un des comptes ci-dessus.
 

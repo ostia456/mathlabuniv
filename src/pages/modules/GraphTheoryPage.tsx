@@ -546,7 +546,6 @@ export function GraphTheoryPage() {
                     const end    = getNodePosition(neighborId, graph.numNodes);
                     const color  = getEdgeColor(node.id, neighborId);
                     const width  = getEdgeWidth(node.id, neighborId);
-                    const onPath = color === '#ef4444';
                     return (
                       <g key={`edge-${node.id}-${neighborId}`}>
                         <line
